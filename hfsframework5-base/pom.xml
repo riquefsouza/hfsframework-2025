@@ -1,0 +1,150 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>br.com.hfs</groupId>
+  <artifactId>hfsframework5-base</artifactId>
+  <version>1.0.0</version>
+  <name>hfsframework5-base</name>
+  <description>hfsframework5-base</description>
+  
+    <properties>
+        <compiler-plugin.version>3.14.0</compiler-plugin.version>
+        <maven.compiler.release>24</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+        <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+        <quarkus.platform.version>3.23.2</quarkus.platform.version>
+        <skipITs>true</skipITs>
+        <surefire-plugin.version>3.5.3</surefire-plugin.version>
+        
+		<version.jar.plugin>3.4.2</version.jar.plugin>
+		
+        <myfaces.version>4.1.1</myfaces.version>
+        <omnifaces-quarkus.version>5.0-M3</omnifaces-quarkus.version>
+        <primefaces-quarkus.version>3.15.4</primefaces-quarkus.version>
+		        
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>${quarkus.platform.group-id}</groupId>
+                <artifactId>${quarkus.platform.artifact-id}</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+  
+    <dependencies>
+		
+		<dependency>
+		    <groupId>io.quarkus</groupId>
+		    <artifactId>quarkus-hibernate-orm-panache</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.quarkus</groupId>
+		    <artifactId>quarkus-jdbc-postgresql</artifactId>
+		</dependency>
+		
+        <!-- Faces -->
+        <dependency>
+            <groupId>org.apache.myfaces.core.extensions.quarkus</groupId>
+            <artifactId>myfaces-quarkus</artifactId>
+            <version>${myfaces.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.primefaces</groupId>
+            <artifactId>quarkus-primefaces</artifactId>
+            <version>${primefaces-quarkus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.primefaces</groupId>
+            <artifactId>quarkus-primefaces-extensions</artifactId>
+            <version>${primefaces-quarkus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.omnifaces</groupId>
+            <artifactId>quarkus-omnifaces</artifactId>
+            <version>${omnifaces-quarkus.version}</version>
+        </dependency>
+        <!-- Extra Themes -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces-themes</artifactId>
+            <version>15.0.4</version>
+        </dependency>
+		    
+    </dependencies>
+  
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler-plugin.version}</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+<!-- 
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-dependency-plugin</artifactId>
+			    <executions>
+			        <execution>
+			            <id>copy-dependencies</id>
+			            <phase>prepare-package</phase>
+			            <goals>
+			                <goal>copy-dependencies</goal>
+			            </goals>
+			            <configuration>
+			                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+			                <overWriteReleases>false</overWriteReleases>
+			                <overWriteSnapshots>false</overWriteSnapshots>
+			                <overWriteIfNewer>true</overWriteIfNewer>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${version.jar.plugin}</version>
+		        <configuration>
+		        	<!-- <outputDirectory>../orcamento/src/main/webapp/WEB-INF/lib</outputDirectory>  -->
+					<archive>
+						<manifestFile>${project.build.sourceDirectory}/META-INF/MANIFEST.MF</manifestFile>
+						<index>true</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<!-- <classpathPrefix>lib</classpathPrefix> -->
+							<!-- <mainClass>br.jus.trt1.hfsframework.util.ldap.LdapExemplo</mainClass> -->
+						</manifest>
+					</archive>
+		        </configuration>
+			</plugin>
+<!-- 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${version.javadoc.plugin}</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+-->
+		</plugins>
+	</build>
+	  
+</project>

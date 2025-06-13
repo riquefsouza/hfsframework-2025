@@ -1,0 +1,53 @@
+server:
+  port: 8080
+  # enables access from any IP address
+  address: 0.0.0.0
+  servlet:
+    context-path: /prime
+  compression:
+    enabled: true # Whether response compression is enabled.
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json # Comma-separated list of MIME types that should be compressed.
+    min-response-size: 1024 # Minimum "Content-Length" value that is required for compression to be performed.
+  undertow:
+    threads:
+      worker: 64 # Generally this should be reasonably high, at least 10 per CPU core: https://undertow.io/undertow-docs/undertow-docs-2.1.0/index.html#listeners-2
+      io: 4 # One IO thread per CPU core is a reasonable default: https://undertow.io/undertow-docs/undertow-docs-2.1.0/index.html#listeners-2
+      
+spring:
+  mvc:
+    locale: US
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/dbhefesto_spring
+    username: postgres
+    password: abcd1234
+    hikari:
+      auto-commit: false
+      connection-timeout: 250 # É uma configuração em milliseconds. O ideal é manter baixo para que estoure timeout logo e não prenda as threads.
+      idle-timeout: 35000
+      max-lifetime: 600000 # Tempo máximo que uma conexão pode ficar aberta (10 min) - security.
+      maximum-pool-size: 20 # Mantemos até no máx 20 conexões com o banco de dados. O ideal é manter baixo mesmo, pois é algo custoso para o banco gerenciar. https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
+      minimum-idle: 10
+      pool-name: master
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        # dialect: org.hibernate.dialect.PostgreSQLDialect
+        generate_statistics: false
+        show-sql: true
+        format_sql: true
+        connection:
+          provider_disables_autocommit: true
+      # Para aumentar a performance ao máximo, desabilitamos o auto-commit e o open-in-view.
+      # https://vladmihalcea.com/why-you-should-always-use-hibernate-connection-provider_disables_autocommit-for-resource-local-jpa-transactions/
+  
+# jwt
+hefesto:
+  jwt:
+    secret: rm'!@N=Ke!~p8VTA2ZRK~nMDQX5Uvm!m'D&]{@Vr?G;2?XhbC:Qa#9#eMLN\\}x3?JR3.2zr~v)gYF^8\\:8>:XfB:Ww75N/emt9Yj[bQMNCWwW\\J?N,nvH.<2\\.r~w]*e~vgak)X"v8H`MH/7"2E`,^k@n<vE-wD3g9JWPy;CrY*.Kd2_D])=><D?YhBaSua5hW%{2]_FVXzb9`8FH^b[X3jzVER&:jw2<=c38=>L/zBq`}C6tT*cCSVC^c]-L}&/
+    expiration: 86400000

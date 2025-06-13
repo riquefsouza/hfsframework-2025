@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
+</head>
+<body>
+<div class="wrapper">
+	<div id="content">
+		<div th:replace="~{private/menu-horizontal :: menu-horizontal}"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->		
+
+	<form id="formListFuncionario" style="padding: 5px;" action="#" 
+		th:action="@{/private/admin/funcionarioView/edit}" method="get" th:object="${bean}">
+		
+		<div class="card">
+			<div class="card-header" 
+				style="font-weight: bold;font-size: large;">				
+				<span th:text="#{listFuncionario.title}" id="formTitle"></span>
+			</div>
+			<div class="card-body">				
+				<div class="row">
+					<th:block th:insert="~{/fragments/panelReport}"></th:block>				
+				</div>
+			</div>
+		</div>
+
+		<div class="form-actions" style="margin:5px 0;">
+			<button type="button" class="btn btn-primary" id="btnExport">
+				<span class="icon text-white-50">
+					<i class="fa fa-file"></i>
+				</span>
+				<span class="text" th:text="#{button.export}"></span>
+			</button>			
+			<button type="button" class="btn btn-success" id="btnAdd">
+				<span class="icon text-white-50">
+					<i class="fa fa-plus-circle"></i>
+				</span>
+				<span class="text" th:text="#{button.add}"></span>
+			</button>
+			<button type="button" class="btn btn-warning" id="btnEdit">
+				<span class="icon text-white-50">
+					<i class="fa fa-chevron-circle-up"></i>
+				</span>
+				<span class="text" th:text="#{button.edit}"></span>
+			</button>			
+			<button type="button" class="btn btn-danger" id="btnPreDelete">
+				<span class="icon text-white-50">
+					<i class="fa fa-minus-circle"></i>
+				</span>
+				<span class="text" th:text="#{button.delete}"></span>					
+			</button>			
+			<button type="button" class="btn btn-primary" id="btnBack">
+				<span class="icon text-white-50">
+					<i class="fa fa-arrow-circle-left"></i>
+				</span>
+				<span class="text" th:text="#{button.back}"></span>
+			</button>			
+		</div>
+
+		<div class="modal fade" id="dlgDeleteConfirmation" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel"><span th:text="#{dlgDeleteConfirmation.title}"></span></h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>		        
+		      </div>
+		      <div class="modal-body">
+		        <p><span th:text="#{dlgDeleteConfirmation.text}" th:remove="tag"></span></p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+		        <button type="button" id="btnDelete" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<input type="hidden" id="funcionario_paginationNumber" th:value="${pagedBean.paging.pageNumber}" />
+		<input type="hidden" id="funcionario_paginationSize" th:value="${pagedBean.paging.pageSize}" />
+		<input type="hidden" id="funcionario_paginationSort" th:value="${pagedBean.paging.pageSort}" />
+		<input type="hidden" id="funcionario_columnOrder" th:value="${pagedBean.paging.columnOrder}" />
+		<input type="hidden" id="funcionario_columnTitle" th:value="${pagedBean.paging.columnTitle}" />
+		
+		<th:block th:insert="~{/fragments/panelPagination}"></th:block>
+		
+		<table class="table table-sm table-striped table-bordered" id="tableFuncionario" style="width: 100%">
+		    <thead>
+		      <tr>
+		      	<th style="display: none" >Id</th>
+		        <th th:onclick="listFuncionario.tableHeaderColumnClick(this, 1, 'nome');">Nome  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+		        <th th:onclick="listFuncionario.tableHeaderColumnClick(this, 2, 'cpfFormatado');">CPF  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+		        <th th:onclick="listFuncionario.tableHeaderColumnClick(this, 3, 'email');">Email  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+		        <th th:onclick="listFuncionario.tableHeaderColumnClick(this, 4, 'telefone');">Telefone  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+				<th th:onclick="listFuncionario.tableHeaderColumnClick(this, 5, 'celular');">Celular  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+				<th th:onclick="listFuncionario.tableHeaderColumnClick(this, 6, 'setor');">Setor  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+				<th th:onclick="listFuncionario.tableHeaderColumnClick(this, 7, 'codCargo');">CodCargo  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+				<th th:onclick="listFuncionario.tableHeaderColumnClick(this, 8, 'cargo');">Cargo  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+				<th th:onclick="listFuncionario.tableHeaderColumnClick(this, 9, 'dataAdmissaoFormatada');">Data Admissão  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+				<th th:onclick="listFuncionario.tableHeaderColumnClick(this, 10, 'dataSaidaFormatada');">Data Saída  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+				<th th:onclick="listFuncionario.tableHeaderColumnClick(this, 11, 'ativo');">Ativo  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr th:each="item : ${pagedBean.page}" th:id="${item.id}" th:onclick="listFuncionario.tableRowClick(this);">		      	
+		      	<td style="display: none" th:text="${item.id}"></td>
+		        <td th:text="${item.nome}"></td>
+		        <td th:text="${item.cpfFormatado}"></td>
+		        <td th:text="${item.email}"></td>
+				<td th:text="${item.telefone}"></td>
+				<td th:text="${item.celular}"></td>
+				<td th:text="${item.setor}"></td>
+				<td th:text="${item.codCargo}"></td>
+				<td th:text="${item.cargo}"></td>
+				<td th:text="${item.dataAdmissaoFormatada}"></td>
+				<td th:text="${item.dataSaidaFormatada}"></td>
+				<td th:text="${item.ativo}"></td>		        
+		      </tr>
+		    </tbody>
+		  </table>	
+		  
+		<br>	  		
+		<br>		
+	</form>
+
+<script th:src="@{/js/admin/funcionario/listFuncionario.js}"></script>
+ 
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
+
+</body>
+</html>

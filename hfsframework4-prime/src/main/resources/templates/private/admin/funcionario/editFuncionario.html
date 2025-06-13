@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
+</head>
+<body>
+<div class="wrapper">
+	<div id="content">
+		<div th:replace="~{private/menu-horizontal :: menu-horizontal}"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->		
+
+	<form id="formEditFuncionario" style="padding: 5px;" action="#" 
+		th:action="@{/private/admin/funcionarioView}" method="post" th:object="${bean}">
+	
+		<div class="card">
+			<div class="card-header" 
+				style="font-weight: bold;font-size: large;">
+				<span th:text="#{editFuncionario.title}" th:remove="tag"></span>
+			</div>
+			<div class="card-body">				
+				<div class="form-actions">				
+					<button type="submit" class="btn btn-success" id="btnSave">
+						<span class="icon text-white-50">
+							<i class="fa fa-check-circle"></i>
+						</span>
+						<span class="text" th:text="#{button.save}"></span>
+					</button>
+								
+					<button type="reset" class="btn btn-light" id="btnReset">
+	                    <span class="icon text-gray-600">
+	                      <i class="fa fa-eraser"></i>
+	                    </span>
+						<span class="text" th:text="#{button.reset}"></span>
+					</button>
+
+					<button type="button" class="btn btn-primary" id="btnCancel">
+						<span class="icon text-white-50"> 
+							<i class="fa fa-times-circle"></i>
+						</span>	
+						<span class="text" th:text="#{button.cancel}"></span>
+					</button>
+				</div>				
+				<div class="row">
+					<div class="col-md-4 form-group mb-3">
+						<input type="hidden" id="funcionario_id" th:field="*{id}" />
+						
+						<label for="funcionario_nome"><span th:text="#{editFuncionario.nome}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="funcionario_nome" maxlength="64" required="required" th:field="*{nome}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+					</div>
+					<div class="col-md-4 form-group mb-3">
+						<label for="funcionario_cpf"><span th:text="#{editFuncionario.cpf}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="funcionario_cpf" maxlength="64" required="required" th:field="*{cpf}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
+					</div>
+					<div class="col-md-4 form-group mb-3">
+						<label for="funcionario_email"><span th:text="#{editFuncionario.email}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="funcionario_email" maxlength="64" required="required" th:field="*{email}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+					</div>
+				</div>	
+				<div class="row">	
+					<div class="col-md-4 form-group mb-3">
+						<label for="funcionario_telefone"><span th:text="#{editFuncionario.telefone}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="funcionario_telefone" maxlength="64" required="required" th:field="*{telefone}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></span>
+					</div>
+					<div class="col-md-4 form-group mb-3">
+						<label for="funcionario_celular"><span th:text="#{editFuncionario.celular}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="funcionario_celular" maxlength="64" required="required" th:field="*{celular}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}"></span>
+					</div>
+					<div class="col-md-4 form-group mb-3">
+						<label for="funcionario_setor"><span th:text="#{editFuncionario.setor}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="funcionario_setor" maxlength="64" required="required" th:field="*{setor}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('setor')}" th:errors="*{setor}"></span>
+					</div>
+				</div>	
+				<div class="row">
+					<div class="col-md-4 form-group mb-3">
+						<label for="funcionario_codCargo"><span th:text="#{editFuncionario.codCargo}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="funcionario_codCargo" maxlength="64" required="required" th:field="*{codCargo}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('codCargo')}" th:errors="*{codCargo}"></span>
+					</div>
+					<div class="col-md-4 form-group mb-3">
+						<label for="funcionario_cargo"><span th:text="#{editFuncionario.cargo}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="funcionario_cargo" maxlength="64" required="required" th:field="*{cargo}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('cargo')}" th:errors="*{cargo}"></span>
+					</div>
+					<div class="col-md-4 form-group mb-3">
+						<label for="funcionario_dataAdmissao"><span th:text="#{editFuncionario.dataAdmissao}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="funcionario_dataAdmissao" maxlength="64" required="required" th:field="*{dataAdmissao}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('dataAdmissao')}" th:errors="*{dataAdmissao}"></span>
+					</div>
+				</div>	
+				<div class="row">					
+					<div class="col-md-4 form-group mb-3">
+						<label for="funcionario_dataSaida"><span th:text="#{editFuncionario.dataSaida}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="funcionario_dataSaida" maxlength="64" required="required" th:field="*{dataSaida}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('dataSaida')}" th:errors="*{dataSaida}"></span>
+					</div>										
+					<div class="col-md-3 form-group mb-2">
+						<div class="form-check">
+						  <input class="form-check-input" type="checkbox" value="" id="funcionario_ativo" th:field="*{ativoBooleano}">
+						  <label class="form-check-label" for="funcionario_ativo">
+						    &nbsp;<span th:text="#{editFuncionario.ativo}" th:remove="tag"></span>
+						  </label>
+						</div>
+					</div>
+													
+				</div>
+				
+			</div>
+		</div>
+		
+		<br>
+		<br>				
+	</form>	
+
+<script th:src="@{/js/admin/funcionario/editFuncionario.js}"></script>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
+
+</body>
+</html>
