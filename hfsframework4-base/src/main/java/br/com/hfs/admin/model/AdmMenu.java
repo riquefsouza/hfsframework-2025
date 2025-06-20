@@ -87,7 +87,7 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 
 	/** The adm menu. */
 	// bi-directional many-to-one association to AdmMenu
-	@ManyToOne(fetch = FetchType.LAZY) // (cascade={CascadeType.ALL}) //
+	@ManyToOne(fetch = FetchType.EAGER) // (cascade={CascadeType.ALL}) //
 	@JoinColumn(name = "MNU_PARENT_SEQ", nullable = true, insertable = false, updatable = false)
 	private AdmMenu admMenuParent;
 

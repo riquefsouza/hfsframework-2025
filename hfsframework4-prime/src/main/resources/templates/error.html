@@ -5,7 +5,7 @@
 <title th:text="#{errorPage.title}"></title>
 </head>
 <body
-	th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf((#response != null)? #response.status : 500)}">
+	th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf((#resposta != null)? #resposta.status : 500)}">
 
 <div class="wrapper">
 	<div id="content">
